@@ -13,3 +13,9 @@
   align-items: center;
   min-width: 200px;
 }
+
+.name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
