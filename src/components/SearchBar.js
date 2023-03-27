@@ -3,18 +3,17 @@ import {FaSearch} from "react-icons/fa"
 import "./SearchBar.css"
 
 
-export const SearchBar = () => {
+export const SearchBar = ({setResults}) => {
     const [input, setInput] = useState("");
 
     const fetchData = (value) => {
         fetch("https://alltimemetsapi.herokuapp.com/players").then((response) => response.json())
             .then((json) => {
                 const results = json.filter((player) => {
-                    return player && player.name && player.name.toLowerCase().includes(value)
+                    return value && player && player.name && player.name.toLowerCase().includes(value)
                 });
-                console.log(results)
-            }
-            
+                setResults(results);
+            }  
         )
     };
 
@@ -28,7 +27,6 @@ export const SearchBar = () => {
             <FaSearch id="search-icon"/>
             <input placeholder="Type to search..." value={input} 
             onChange={(e) => handleChange(e.target.value)}></input>
-            {input}
         </div>
     );
 }
