@@ -9,8 +9,12 @@ export const SearchBar = () => {
     const fetchData = (value) => {
         fetch("https://alltimemetsapi.herokuapp.com/players").then((response) => response.json())
             .then((json) => {
-                console.log(json);
+                const results = json.filter((player) => {
+                    return player && player.name && player.name.toLowerCase().includes(value)
+                });
+                console.log(results)
             }
+            
         )
     };
 
