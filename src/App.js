@@ -11,13 +11,13 @@ function App() {
 
   const [player, setPlayer] = useState([]);
 
-  const[guessedplayers, setGuessedPlayers] = useState([]);
-
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
     Axios.get(url).then((res) => {
       setPlayer(res.data)
     });
+    const newGuessedPlayers = [...guessedPlayers, player];
+    setGuessedPlayers(newGuessedPlayers);
   }
 
   const [chosenPlayer, setChosenPlayer] = useState([]);
@@ -29,8 +29,7 @@ function App() {
     });
   }
 
- 
-
+  const[guessedPlayers, setGuessedPlayers] = useState([]);
   
   return (
     <div className="App">
@@ -49,7 +48,7 @@ function App() {
               <th scope="col">bwar</th>
           </tr>
           <tr>
-              <th>{chosenPlayer.number}</th>
+              <td>{chosenPlayer.number}</td>
               <td>{chosenPlayer.bats}</td>
               <td>{chosenPlayer.hand}</td>
               <td>{chosenPlayer.birthYear}</td>
@@ -75,8 +74,23 @@ function App() {
               <th scope="col">Debut Year</th>
               <th scope="col">Position</th>
               <th scope="col">All Stars</th>
-              <th scope="col">bwar</th>
+              <th scope="col">bWAR</th>
           </tr>
+            {guessedPlayers.map((player1) => (
+              <tr>
+                <td>{player1.name}</td>
+                <td>{player1.number}</td>
+                <td>{player1.bats}</td>
+                <td>{player1.hand}</td>
+                <td>{player1.birthYear}</td>
+                <td>{player1.position}</td>
+                <td>{player1.allStars}</td>
+                <td>{player1.bwar}</td>
+              </tr>
+            ))}
+            <tr>
+              
+            </tr>
 
       </table>
       </div>
