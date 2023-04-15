@@ -54,7 +54,7 @@ function App() {
               <th scope="col">Number</th>
               <th scope="col">Bats</th>
               <th scope="col">Throws</th>
-              <th scope="col">Debut Year</th>
+              <th scope="col">Birth Year</th>
               <th scope="col">Position</th>
               <th scope="col">All Stars</th>
               <th scope="col">bwar</th>
@@ -83,7 +83,7 @@ function App() {
               <th scope="col">Number</th>
               <th scope="col">Bats</th>
               <th scope="col">Throws</th>
-              <th scope="col">Debut Year</th>
+              <th scope="col">Birth Year</th>
               <th scope="col">Position</th>
               <th scope="col">All Stars</th>
               <th scope="col">bWAR</th>
