@@ -11,13 +11,17 @@ function App() {
 
   const [player, setPlayer] = useState([]);
 
+  const[guessedPlayers, setGuessedPlayers] = useState([]);
+
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
     Axios.get(url).then((res) => {
       setPlayer(res.data)
+      const newGuessedPlayers = [...guessedPlayers, res.data];
+      setGuessedPlayers(newGuessedPlayers);
     });
-    const newGuessedPlayers = [...guessedPlayers, player];
-    setGuessedPlayers(newGuessedPlayers);
+   
+   
   }
 
   const [chosenPlayer, setChosenPlayer] = useState([]);
@@ -28,8 +32,6 @@ function App() {
       setChosenPlayer(res.data)
     });
   }
-
-  const[guessedPlayers, setGuessedPlayers] = useState([]);
   
   return (
     <div className="App">
@@ -88,9 +90,7 @@ function App() {
                 <td>{player1.bwar}</td>
               </tr>
             ))}
-            <tr>
-              
-            </tr>
+     
 
       </table>
       </div>
