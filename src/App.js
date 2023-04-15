@@ -9,17 +9,25 @@ import Axios from "axios";
 function App() {
   const [results, setResults] = useState([]);
 
-  const [player, setPlayer] = useState([]);
 
   const[guessedPlayers, setGuessedPlayers] = useState([]);
+
+  const[result, setResult] = useState("");
 
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
     Axios.get(url).then((res) => {
-      setPlayer(res.data)
+
       const newGuessedPlayers = [...guessedPlayers, res.data];
       setGuessedPlayers(newGuessedPlayers);
+      if (res.data.id === chosenPlayer.id) {
+        setResult("Correct!")
+      }
+      else {
+        setResult("Wrong")
+      }
     });
+
    
    
   }
@@ -66,7 +74,7 @@ function App() {
         <SearchResultsList results={results} pickPlayer={pickPlayer}/>
       </div>
       <div className="guesses">
-        <h1 className='name'>Name: {player.name} </h1>
+        <h1 className='name'>Result: {result} </h1>
         <table>
           <tr>
               <th scope="col">Name</th>
