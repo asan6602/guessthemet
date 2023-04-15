@@ -22,6 +22,8 @@ function App() {
       setGuessedPlayers(newGuessedPlayers);
       if (res.data.id === chosenPlayer.id) {
         setResult("Correct!")
+        const clear = [];
+        setGuessedPlayers(clear);
       }
       else {
         setResult("Wrong")
