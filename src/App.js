@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import './App.css';
 import { SearchBar } from './components/SearchBar';
 import { SearchResultsList } from './components/SearchResultsList';
@@ -24,6 +24,7 @@ function App() {
         setResult("Correct!")
         const clear = [];
         setGuessedPlayers(clear);
+        pickChosenPlayer();
       }
       else {
         setResult("Wrong")
@@ -42,6 +43,10 @@ function App() {
       setChosenPlayer(res.data)
     });
   }
+
+  useEffect(() => {
+    pickChosenPlayer();
+  }, []);
   
   return (
     <div className="App">
