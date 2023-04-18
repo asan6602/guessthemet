@@ -53,8 +53,8 @@ tr:nth-child(even) {
 }
 
 th[scope='col'] {
-    background-color: #696969;
-    color: #fff;
+    background-color: #002D72;
+    color: #FF5910;
 }
 
 caption {

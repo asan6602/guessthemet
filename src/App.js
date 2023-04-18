@@ -9,10 +9,11 @@ import Axios from "axios";
 function App() {
   const [results, setResults] = useState([]);
 
-
   const[guessedPlayers, setGuessedPlayers] = useState([]);
 
   const[result, setResult] = useState("");
+
+  const[colorNumber, setColorNumber] = useState("");
 
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
@@ -20,6 +21,7 @@ function App() {
 
       const newGuessedPlayers = [...guessedPlayers, res.data];
       setGuessedPlayers(newGuessedPlayers);
+      checkNumber(res.data.number);
       if (res.data.id === chosenPlayer.id) {
         setResult("Correct!")
         const clear = [];
@@ -31,16 +33,29 @@ function App() {
       }
     });
 
-   
-   
+  }
+
+  const checkNumber = (number) => {
+    if (colorNumber != "Green") {
+      if (number === chosenPlayer.number){
+        setColorNumber("Green");
+      }
+      else if (Math.abs(number - chosenPlayer.number) < 6) {
+        setColorNumber("Yellow");
+      } else {
+        setColorNumber("Red")
+      }
+    }
   }
 
   const [chosenPlayer, setChosenPlayer] = useState([]);
 
   const pickChosenPlayer = () => {
+    setColorNumber("");
     const url = "https://alltimemetsapi.herokuapp.com/random";
     Axios.get(url).then((res) => {
       setChosenPlayer(res.data)
+      
     });
   }
 
@@ -51,7 +66,7 @@ function App() {
   return (
     <div className="App">
       <div className='chosen'>
-        <button className= "startGame" onClick={pickChosenPlayer}> set player </button>
+      {/*<button className= "startGame" onClick={pickChosenPlayer}> set player </button>*/}
         <h1 className="chosenPlayer"> Name: {chosenPlayer.name}</h1>
         <table>
           <caption>Guess the Player</caption>
@@ -65,7 +80,7 @@ function App() {
               <th scope="col">bwar</th>
           </tr>
           <tr>
-              <td>{chosenPlayer.number}</td>
+              <td style={{background:colorNumber}}>{chosenPlayer.number}</td>
               <td>{chosenPlayer.bats}</td>
               <td>{chosenPlayer.hand}</td>
               <td>{chosenPlayer.birthYear}</td>
