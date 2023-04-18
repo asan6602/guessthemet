@@ -7,6 +7,10 @@ import Axios from "axios";
 
 
 function App() {
+  const CORRECT = "#CAF2C2";
+  const CLOSE = "#FFF8B8";
+  const WRONG = "#FFD6C9";
+
   const [results, setResults] = useState([]);
 
   const[guessedPlayers, setGuessedPlayers] = useState([]);
@@ -42,36 +46,36 @@ function App() {
   }
 
   const checkNumber = (number) => {
-    if (colorNumber !== "Green") {
+    if (colorNumber !== CORRECT) {
       if (number === chosenPlayer.number){
-        setColorNumber("Green");
+        setColorNumber(CORRECT);
       }
-      else if (Math.abs(number - chosenPlayer.number) < 6) {
-        setColorNumber("Yellow");
+      else if (Math.abs(number - chosenPlayer.number) < 11) {
+        setColorNumber(CLOSE);
       } else {
-        setColorNumber("Red")
+        setColorNumber(WRONG)
       }
     }
   }
 
   const checkBats = (bats) => {
-    if (colorBats !== "Green") {
+    if (colorBats !== CORRECT) {
       if (bats === chosenPlayer.bats){
-        setColorBats("Green");
+        setColorBats(CORRECT);
       }
       else {
-        setColorBats("Red")
+        setColorBats(WRONG)
       }
     }
   }
 
   const checkHand = (hand) => {
-    if (colorHand !== "Green") {
+    if (colorHand !== CORRECT) {
       if (hand === chosenPlayer.hand){
-        setColorHand("Green");
+        setColorHand(CORRECT);
       }
       else {
-        setColorHand("Red")
+        setColorHand(WRONG)
       }
     }
   }
