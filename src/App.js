@@ -15,6 +15,10 @@ function App() {
 
   const[colorNumber, setColorNumber] = useState("");
 
+  const[colorBats, setColorBats] = useState("");
+  
+  const[colorHand, setColorHand] = useState("");
+
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
     Axios.get(url).then((res) => {
@@ -22,6 +26,7 @@ function App() {
       const newGuessedPlayers = [...guessedPlayers, res.data];
       setGuessedPlayers(newGuessedPlayers);
       checkNumber(res.data.number);
+      checkBats(res.data.bats)
       if (res.data.id === chosenPlayer.id) {
         setResult("Correct!")
         const clear = [];
@@ -36,7 +41,7 @@ function App() {
   }
 
   const checkNumber = (number) => {
-    if (colorNumber != "Green") {
+    if (colorNumber !== "Green") {
       if (number === chosenPlayer.number){
         setColorNumber("Green");
       }
@@ -48,10 +53,23 @@ function App() {
     }
   }
 
+  const checkBats = (bats) => {
+    if (colorBats !== "Green") {
+      if (bats === chosenPlayer.bats){
+        setColorBats("Green");
+      }
+      else {
+        setColorBats("Red")
+      }
+    }
+  }
+
+
   const [chosenPlayer, setChosenPlayer] = useState([]);
 
   const pickChosenPlayer = () => {
     setColorNumber("");
+    setColorBats("");
     const url = "https://alltimemetsapi.herokuapp.com/random";
     Axios.get(url).then((res) => {
       setChosenPlayer(res.data)
@@ -81,7 +99,7 @@ function App() {
           </tr>
           <tr>
               <td style={{background:colorNumber}}>{chosenPlayer.number}</td>
-              <td>{chosenPlayer.bats}</td>
+              <td style={{background:colorBats}}>{chosenPlayer.bats}</td>
               <td>{chosenPlayer.hand}</td>
               <td>{chosenPlayer.birthYear}</td>
               <td>{chosenPlayer.position}</td>
