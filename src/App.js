@@ -26,6 +26,9 @@ function App() {
   const[colorHand, setColorHand] = useState("");
   const[displayHand, setDisplayHand] = useState("");
 
+  const[colorBirthDate, setColorBirthDate] = useState("");
+  const[displayBirthDate, setDisplayBirthDate] = useState("");
+
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
     Axios.get(url).then((res) => {
@@ -33,8 +36,9 @@ function App() {
       const newGuessedPlayers = [...guessedPlayers, res.data];
       setGuessedPlayers(newGuessedPlayers);
       checkNumber(res.data.number);
-      checkBats(res.data.bats)
-      checkHand(res.data.hand)
+      checkBats(res.data.bats);
+      checkHand(res.data.hand);
+      checkBirthDate(res.data.birthYear);
       if (res.data.id === chosenPlayer.id) {
         setResult("Correct!")
         const clear = [];
@@ -92,6 +96,24 @@ function App() {
     }
   }
 
+  const checkBirthDate = (year) => {
+    if(colorBirthDate !== CORRECT) {
+      if(year === chosenPlayer.birthYear) {
+        setColorBirthDate(CORRECT);
+        setDisplayBirthDate(year);
+      }
+      else if (Math.abs(year - chosenPlayer.birthYear) < 11) {
+        setColorBirthDate(CLOSE);
+        setDisplayBirthDate(year);
+      } else {
+        if(colorBirthDate !== CLOSE) {
+          setColorBirthDate(WRONG);
+          setDisplayBirthDate(year);
+        }
+      }
+    }
+  }
+
 
   const [chosenPlayer, setChosenPlayer] = useState([]);
 
@@ -102,6 +124,8 @@ function App() {
     setDisplayBats("");
     setColorHand("");
     setDisplayHand("");
+    setColorBirthDate("");
+    setDisplayBirthDate("");
     const url = "https://alltimemetsapi.herokuapp.com/random";
     Axios.get(url).then((res) => {
       setChosenPlayer(res.data)
@@ -133,7 +157,7 @@ function App() {
               <td style={{background:colorNumber}}>{displayNumber}</td>
               <td style={{background:colorBats}}>{displayBats}</td>
               <td style={{background:colorHand}}>{displayHand}</td>
-              <td>{chosenPlayer.birthYear}</td>
+              <td style={{background:colorBirthDate}}>{displayBirthDate}</td>
               <td>{chosenPlayer.position}</td>
               <td>{chosenPlayer.allStars}</td>
               <td>{chosenPlayer.bwar}</td>
