@@ -67,10 +67,17 @@ function App() {
       if (number === chosenPlayer.number){
         setColorNumber(CORRECT);
         setDisplayNumber(number);
+
+      var difference = number - chosenPlayer.number;
       }
-      else if (Math.abs(number - chosenPlayer.number) < 11) {
+      else if (Math.abs( number - chosenPlayer.number) < 11) {
         setColorNumber(CLOSE);
-        setDisplayNumber(number);
+        if(Math.sign( number - chosenPlayer.number) > 0) {
+          setDisplayNumber("↓" + number);
+        }
+        else {
+          setDisplayNumber("↑" + number);
+        }
       } else {
         if(colorNumber !== CLOSE) {
           setColorNumber(WRONG);
