@@ -144,7 +144,13 @@ function App() {
       }
       else if (Math.abs(allStars - chosenPlayer.allStars) < 4) {
         setColorAllStar(CLOSE);
-        setDisplayAllStar(allStars);
+        if(Math.sign(allStars - chosenPlayer.allStars) > 0) {
+          
+          setDisplayAllStar("↓" + allStars);
+        }
+        else {
+          setDisplayAllStar("↑" + allStars);
+        }
       } else {
         if(colorAllStar !== CLOSE) {
           setColorAllStar(WRONG);
