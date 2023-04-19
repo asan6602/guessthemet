@@ -29,6 +29,9 @@ function App() {
   const[colorBirthDate, setColorBirthDate] = useState("");
   const[displayBirthDate, setDisplayBirthDate] = useState("");
 
+  const[colorAllStar, setColorAllStar] = useState("");
+  const[displayAllStar, setDisplayAllStar] = useState("");
+
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
     Axios.get(url).then((res) => {
@@ -39,6 +42,7 @@ function App() {
       checkBats(res.data.bats);
       checkHand(res.data.hand);
       checkBirthDate(res.data.birthYear);
+      checkAllStars(res.data.allStars);
       if (res.data.id === chosenPlayer.id) {
         setResult("Correct!")
         const clear = [];
@@ -114,6 +118,24 @@ function App() {
     }
   }
 
+  const checkAllStars = (allStars) => {
+    if(colorAllStar !== CORRECT) {
+      if(allStars === chosenPlayer.allStars) {
+        setColorAllStar(CORRECT);
+        setDisplayAllStar(allStars);
+      }
+      else if (Math.abs(allStars - chosenPlayer.allStars) < 4) {
+        setColorAllStar(CLOSE);
+        setDisplayAllStar(allStars);
+      } else {
+        if(colorAllStar !== CLOSE) {
+          setColorAllStar(WRONG);
+          setDisplayAllStar(allStars);
+        }
+      }
+    }
+  }
+
 
   const [chosenPlayer, setChosenPlayer] = useState([]);
 
@@ -126,6 +148,8 @@ function App() {
     setDisplayHand("");
     setColorBirthDate("");
     setDisplayBirthDate("");
+    setColorAllStar("");
+    setDisplayAllStar("");
     const url = "https://alltimemetsapi.herokuapp.com/random";
     Axios.get(url).then((res) => {
       setChosenPlayer(res.data)
@@ -159,7 +183,7 @@ function App() {
               <td style={{background:colorHand}}>{displayHand}</td>
               <td style={{background:colorBirthDate}}>{displayBirthDate}</td>
               <td>{chosenPlayer.position}</td>
-              <td>{chosenPlayer.allStars}</td>
+              <td style={{background:colorAllStar}}>{displayAllStar}</td>
               <td>{chosenPlayer.bwar}</td>
           </tr>
       </table>
