@@ -18,10 +18,13 @@ function App() {
   const[result, setResult] = useState("");
 
   const[colorNumber, setColorNumber] = useState("");
+  const[displayNumber, setDisplayNumber] = useState("");
 
   const[colorBats, setColorBats] = useState("");
+  const[displayBats, setDisplayBats] = useState("");
   
   const[colorHand, setColorHand] = useState("");
+  const[displayHand, setDisplayHand] = useState("");
 
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
@@ -49,11 +52,16 @@ function App() {
     if (colorNumber !== CORRECT) {
       if (number === chosenPlayer.number){
         setColorNumber(CORRECT);
+        setDisplayNumber(number);
       }
       else if (Math.abs(number - chosenPlayer.number) < 11) {
         setColorNumber(CLOSE);
+        setDisplayNumber(number);
       } else {
-        setColorNumber(WRONG)
+        if(colorNumber !== CLOSE) {
+          setColorNumber(WRONG);
+          setDisplayNumber(number);
+        }
       }
     }
   }
@@ -62,9 +70,11 @@ function App() {
     if (colorBats !== CORRECT) {
       if (bats === chosenPlayer.bats){
         setColorBats(CORRECT);
+        setDisplayBats(bats);
       }
       else {
-        setColorBats(WRONG)
+        setColorBats(WRONG);
+        setDisplayBats(bats);
       }
     }
   }
@@ -73,9 +83,11 @@ function App() {
     if (colorHand !== CORRECT) {
       if (hand === chosenPlayer.hand){
         setColorHand(CORRECT);
+        setDisplayHand(hand);
       }
       else {
         setColorHand(WRONG)
+        setDisplayHand(hand);
       }
     }
   }
@@ -85,8 +97,11 @@ function App() {
 
   const pickChosenPlayer = () => {
     setColorNumber("");
+    setDisplayNumber("");
     setColorBats("");
+    setDisplayBats("");
     setColorHand("");
+    setDisplayHand("");
     const url = "https://alltimemetsapi.herokuapp.com/random";
     Axios.get(url).then((res) => {
       setChosenPlayer(res.data)
@@ -115,9 +130,9 @@ function App() {
               <th scope="col">bwar</th>
           </tr>
           <tr>
-              <td style={{background:colorNumber}}>{chosenPlayer.number}</td>
-              <td style={{background:colorBats}}>{chosenPlayer.bats}</td>
-              <td style={{background:colorHand}}>{chosenPlayer.hand}</td>
+              <td style={{background:colorNumber}}>{displayNumber}</td>
+              <td style={{background:colorBats}}>{displayBats}</td>
+              <td style={{background:colorHand}}>{displayHand}</td>
               <td>{chosenPlayer.birthYear}</td>
               <td>{chosenPlayer.position}</td>
               <td>{chosenPlayer.allStars}</td>
