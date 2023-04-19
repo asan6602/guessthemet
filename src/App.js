@@ -68,7 +68,6 @@ function App() {
         setColorNumber(CORRECT);
         setDisplayNumber(number);
 
-      var difference = number - chosenPlayer.number;
       }
       else if (Math.abs( number - chosenPlayer.number) < 11) {
         setColorNumber(CLOSE);
@@ -120,8 +119,14 @@ function App() {
         setDisplayBirthDate(year);
       }
       else if (Math.abs(year - chosenPlayer.birthYear) < 11) {
+        
         setColorBirthDate(CLOSE);
-        setDisplayBirthDate(year);
+        if(Math.sign( year - chosenPlayer.birthYear) > 0) {
+          setDisplayBirthDate("↓" + year);
+        }
+        else {
+          setDisplayBirthDate("↑" + year);
+        }
       } else {
         if(colorBirthDate !== CLOSE) {
           setColorBirthDate(WRONG);
