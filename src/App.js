@@ -32,6 +32,9 @@ function App() {
   const[colorAllStar, setColorAllStar] = useState("");
   const[displayAllStar, setDisplayAllStar] = useState("");
 
+  const[colorBwar, setColorBwar] = useState("");
+  const[displayBwar, setDisplayBwar] = useState("");
+
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
     Axios.get(url).then((res) => {
@@ -43,6 +46,7 @@ function App() {
       checkHand(res.data.hand);
       checkBirthDate(res.data.birthYear);
       checkAllStars(res.data.allStars);
+      checkBwar(res.data.bwar);
       if (res.data.id === chosenPlayer.id) {
         setResult("Correct!")
         const clear = [];
@@ -55,6 +59,8 @@ function App() {
     });
 
   }
+
+  //↓ ↑
 
   const checkNumber = (number) => {
     if (colorNumber !== CORRECT) {
@@ -136,6 +142,24 @@ function App() {
     }
   }
 
+  const checkBwar = (bwar) => {
+    if(colorBwar !== CORRECT) {
+      if(bwar === chosenPlayer.bwar) {
+        setColorBwar(CORRECT);
+        setDisplayBwar(bwar);
+      }
+      else if (Math.abs(bwar - chosenPlayer.bwar) < 10.1) {
+        setColorBwar(CLOSE);
+        setDisplayBwar(bwar);
+      } else {
+        if(colorBwar !== CLOSE) {
+          setColorBwar(WRONG);
+          setDisplayBwar(bwar);
+        }
+      }
+    }
+  }
+
 
   const [chosenPlayer, setChosenPlayer] = useState([]);
 
@@ -150,6 +174,8 @@ function App() {
     setDisplayBirthDate("");
     setColorAllStar("");
     setDisplayAllStar("");
+    setColorBwar("");
+    setDisplayBwar("");
     const url = "https://alltimemetsapi.herokuapp.com/random";
     Axios.get(url).then((res) => {
       setChosenPlayer(res.data)
@@ -184,7 +210,7 @@ function App() {
               <td style={{background:colorBirthDate}}>{displayBirthDate}</td>
               <td>{chosenPlayer.position}</td>
               <td style={{background:colorAllStar}}>{displayAllStar}</td>
-              <td>{chosenPlayer.bwar}</td>
+              <td style={{background:colorBwar}}>{displayBwar}</td>
           </tr>
       </table>
       </div>
