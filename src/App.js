@@ -168,7 +168,12 @@ function App() {
       }
       else if (Math.abs(bwar - chosenPlayer.bwar) < 10.1) {
         setColorBwar(CLOSE);
-        setDisplayBwar(bwar);
+        if(Math.sign(bwar - chosenPlayer.bwar) > 0) {
+          setDisplayBwar("↓" + bwar);
+        }
+        else {
+          setDisplayBwar("↑" + bwar);
+        }
       } else {
         if(colorBwar !== CLOSE) {
           setColorBwar(WRONG);
