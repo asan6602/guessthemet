@@ -35,6 +35,9 @@ function App() {
   const[colorBwar, setColorBwar] = useState("");
   const[displayBwar, setDisplayBwar] = useState("");
 
+  const[colorPosition, setColorPosition] = useState("");
+  const[displayPosition, setDisplayPosition] = useState("");
+
   const pickPlayer = (id) => {
     let url = `https://alltimemetsapi.herokuapp.com/player?id=${id}`;
     Axios.get(url).then((res) => {
@@ -47,6 +50,7 @@ function App() {
       checkBirthDate(res.data.birthYear);
       checkAllStars(res.data.allStars);
       checkBwar(res.data.bwar);
+      checkPosition(res.data.position)
       if (res.data.id === chosenPlayer.id) {
         setResult("Correct!")
         const clear = [];
@@ -183,6 +187,41 @@ function App() {
     }
   }
 
+  const infield = ["1B","2B","SS","3B"];
+
+  const outfield = ["LF","CF","RF"];
+
+  const pitcher = ["SP","RP"];
+
+  const checkPosition = (position) => {
+    if(colorPosition !== CORRECT) {
+      if(position === chosenPlayer.position) {
+        setColorPosition(CORRECT);
+        setDisplayPosition(position);
+      }
+      else if(infield.includes(position) && infield.includes(chosenPlayer.position)) {
+        setColorPosition(CLOSE);
+        setDisplayPosition(position);
+      }
+      else if(outfield.includes(position) && outfield.includes(chosenPlayer.position)) {
+        setColorPosition(CLOSE);
+        setDisplayPosition(position); 
+      }
+      else if(pitcher.includes(position) && pitcher.includes(chosenPlayer.position)) {
+        setColorPosition(CLOSE);
+        setDisplayPosition(position);
+      }
+      else {
+        if(colorPosition !== CLOSE) {
+          setColorPosition(WRONG);
+          setDisplayPosition(position);
+        }
+      }
+
+    }
+    
+  }
+
 
   const [chosenPlayer, setChosenPlayer] = useState([]);
 
@@ -199,6 +238,8 @@ function App() {
     setDisplayAllStar("");
     setColorBwar("");
     setDisplayBwar("");
+    setColorPosition("");
+    setDisplayPosition("");
     const url = "https://alltimemetsapi.herokuapp.com/random";
     Axios.get(url).then((res) => {
       setChosenPlayer(res.data)
@@ -231,7 +272,7 @@ function App() {
               <td style={{background:colorBats}}>{displayBats}</td>
               <td style={{background:colorHand}}>{displayHand}</td>
               <td style={{background:colorBirthDate}}>{displayBirthDate}</td>
-              <td>{chosenPlayer.position}</td>
+              <td style={{background:colorPosition}}>{displayPosition}</td>
               <td style={{background:colorAllStar}}>{displayAllStar}</td>
               <td style={{background:colorBwar}}>{displayBwar}</td>
           </tr>
