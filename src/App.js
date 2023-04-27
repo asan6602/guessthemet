@@ -257,7 +257,7 @@ function App() {
       {/*<button className= "startGame" onClick={pickChosenPlayer}> set player </button>*/}
         <h1 className="chosenPlayer"> Name: {chosenPlayer.name}</h1>
         <table>
-          <caption>Guess the Player</caption>
+          <caption>Guess the Met</caption>
           <tr>
               <th scope="col">Number</th>
               <th scope="col">Bats</th>
